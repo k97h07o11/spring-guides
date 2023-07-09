@@ -6,6 +6,9 @@ import com.example.swagger.dto.ArticleResponseDto;
 import com.example.swagger.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +27,7 @@ public class ArticleController {
 
     @Operation(summary = "게시글 목록 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공")
+            @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArticleListResponseDto.class))))
     })
     @GetMapping("/articles")
     public List<ArticleListResponseDto> getArticles() {
@@ -33,8 +36,8 @@ public class ArticleController {
 
     @Operation(summary = "게시글 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 조회 성공"),
-            @ApiResponse(responseCode = "404", description = "조회하려는 게시글이 존재하지 않는 경우")
+            @ApiResponse(responseCode = "200", description = "게시글 조회 성공", content = @Content(schema = @Schema(implementation = ArticleResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "조회하려는 게시글이 존재하지 않는 경우", content = @Content)
     })
     @GetMapping("/articles/{articleId}")
     public ArticleResponseDto getArticle(
@@ -46,7 +49,7 @@ public class ArticleController {
 
     @Operation(summary = "게시글 작성")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 작성 성공")
+            @ApiResponse(responseCode = "200", description = "게시글 작성 성공", content = @Content)
     })
     @PostMapping("/articles")
     public void postArticle(
@@ -57,8 +60,8 @@ public class ArticleController {
 
     @Operation(summary = "게시글 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 수정 성공"),
-            @ApiResponse(responseCode = "400", description = "수졍하려는 게시글이 존재하지 않는 경우")
+            @ApiResponse(responseCode = "200", description = "게시글 수정 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "수졍하려는 게시글이 존재하지 않는 경우", content = @Content)
     })
     @PutMapping("/articles/{articleId}")
     public void putArticle(
@@ -71,8 +74,8 @@ public class ArticleController {
 
     @Operation(summary = "게시글 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 삭제 성공"),
-            @ApiResponse(responseCode = "400", description = "삭제하려는 게시글이 존재하지 않는 경우")
+            @ApiResponse(responseCode = "200", description = "게시글 삭제 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "삭제하려는 게시글이 존재하지 않는 경우", content = @Content)
     })
     @DeleteMapping("/articles/{articleId}")
     public void deleteArticle(
