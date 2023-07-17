@@ -24,8 +24,8 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
         List<Article> articles = queryFactory
                 .selectFrom(article)
                 .where(
-                        titleContains(title),
-                        contentContains(content)
+                        titleContainsIgnoreCase(title),
+                        contentContainsIgnoreCase(content)
                 )
                 .orderBy(article.createdAt.desc())
                 .limit(pageable.getPageSize()).offset(pageable.getOffset())
@@ -35,18 +35,18 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
                 .select(article.count())
                 .from(article)
                 .where(
-                        titleContains(title),
-                        contentContains(content)
+                        titleContainsIgnoreCase(title),
+                        contentContainsIgnoreCase(content)
                 );
 
         return PageableExecutionUtils.getPage(articles, pageable, countQuery::fetchOne);
     }
 
-    private BooleanExpression titleContains(String title) {
-        return StringUtils.hasText(title) ? article.title.contains(title) : null;
+    private BooleanExpression titleContainsIgnoreCase(String title) {
+        return StringUtils.hasText(title) ? article.title.containsIgnoreCase(title) : null;
     }
 
-    private BooleanExpression contentContains(String content) {
-        return StringUtils.hasText(content) ? article.content.contains(content) : null;
+    private BooleanExpression contentContainsIgnoreCase(String content) {
+        return StringUtils.hasText(content) ? article.content.containsIgnoreCase(content) : null;
     }
 }
