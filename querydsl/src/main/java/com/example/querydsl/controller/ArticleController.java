@@ -5,9 +5,9 @@ import com.example.querydsl.dto.ArticleRequestDto;
 import com.example.querydsl.dto.ArticleResponseDto;
 import com.example.querydsl.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,11 +16,12 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/articles")
-    public List<ArticleListResponseDto> getArticles(
+    public Page<ArticleListResponseDto> getArticles(
+            Pageable pageable,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String content
     ) {
-        return articleService.getArticles(title, content);
+        return articleService.getArticles(pageable, title, content);
     }
 
     @GetMapping("/articles/{articleId}")

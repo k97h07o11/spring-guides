@@ -6,13 +6,12 @@ import com.example.querydsl.dto.ArticleResponseDto;
 import com.example.querydsl.entity.Article;
 import com.example.querydsl.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +20,9 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
-    public List<ArticleListResponseDto> getArticles(String title, String content) {
-        List<Article> articles = articleRepository.searchAll(title, content);
-        return articles.stream()
-                .map(ArticleListResponseDto::new)
-                .collect(Collectors.toList());
+    public Page<ArticleListResponseDto> getArticles(Pageable pageable, String title, String content) {
+        Page<Article> articles = articleRepository.searchAll(pageable, title, content);
+        return articles.map(ArticleListResponseDto::new);
     }
 
     @Transactional(readOnly = true)

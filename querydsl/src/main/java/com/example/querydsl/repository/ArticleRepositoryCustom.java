@@ -1,10 +1,10 @@
 package com.example.querydsl.repository;
 
 import com.example.querydsl.entity.Article;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ArticleRepositoryCustom {
 
-    List<Article> searchAll(String title, String content);
+    Page<Article> searchAll(Pageable pageable, String title, String content);
 }
