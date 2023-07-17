@@ -1,7 +1,7 @@
 package com.example.querydsl.repository;
 
 import com.example.querydsl.entity.Article;
-import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
@@ -17,19 +17,20 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
 
     @Override
     public List<Article> searchAll(String title, String content) {
-        BooleanBuilder builder = new BooleanBuilder();
-
-        if (StringUtils.hasText(title)) {
-            builder.and(article.title.contains(title));
-        }
-
-        if (StringUtils.hasText(content)) {
-            builder.and(article.content.contains(content));
-        }
-
         return queryFactory
                 .selectFrom(article)
-                .where(builder)
+                .where(
+                        titleContains(title),
+                        contentContains(content)
+                )
                 .fetch();
+    }
+
+    private BooleanExpression titleContains(String title) {
+        return StringUtils.hasText(title) ? article.title.contains(title) : null;
+    }
+
+    private BooleanExpression contentContains(String content) {
+        return StringUtils.hasText(content) ? article.content.contains(content) : null;
     }
 }
