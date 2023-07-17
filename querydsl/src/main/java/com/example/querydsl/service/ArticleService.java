@@ -21,8 +21,8 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
-    public List<ArticleListResponseDto> getArticles() {
-        List<Article> articles = articleRepository.findAll();
+    public List<ArticleListResponseDto> getArticles(String title, String content) {
+        List<Article> articles = articleRepository.searchAll(title, content);
         return articles.stream()
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());

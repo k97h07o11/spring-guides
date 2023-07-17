@@ -16,8 +16,11 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/articles")
-    public List<ArticleListResponseDto> getArticles() {
-        return articleService.getArticles();
+    public List<ArticleListResponseDto> getArticles(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content
+    ) {
+        return articleService.getArticles(title, content);
     }
 
     @GetMapping("/articles/{articleId}")
