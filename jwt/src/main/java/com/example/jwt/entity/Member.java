@@ -1,10 +1,6 @@
 package com.example.jwt.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +10,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 public class Member {
 
     @Id
@@ -28,9 +25,5 @@ public class Member {
     private Member(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        password = passwordEncoder.encode(password);
     }
 }

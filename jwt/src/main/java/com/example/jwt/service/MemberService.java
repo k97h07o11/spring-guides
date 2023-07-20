@@ -24,7 +24,7 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         Member member = joinRequestDto.toEntity();
-        member.encodePassword(passwordEncoder);
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
 
