@@ -1,0 +1,22 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          naver:
+            client-id: naver-client-id
+            client-secret: naver-client-secret
+            authorization-grant-type: naver-authorization-grant-type
+            redirect-uri: naver-redirect-uri
+          kakao:
+            client-id: kakao-client-id
+            client-secret: kakao-client-secret
+            authorization-grant-type: kakao-authorization-grant-type
+            redirect-uri: kakao-redirect-uri
+        provider:
+          naver:
+            authorization-uri: naver-authorize-uri
+            token-uri: naver-token-uri
+          kakao:
+            authorization-uri: kakao-authorize-uri
+            token-uri: kakao-token-uri
