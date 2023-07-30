@@ -26,7 +26,7 @@
 </div>
 <script type="text/javascript">
     $.get("/user", function (data) {
-        $("#user").html(data.name);
+        $("#user").html(data.id);
         $(".unauthenticated").hide()
         $(".authenticated").show()
     });
