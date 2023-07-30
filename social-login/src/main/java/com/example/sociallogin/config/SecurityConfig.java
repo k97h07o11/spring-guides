@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -28,6 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService)
                         )
+                )
+                .logout(l -> l
+                        .logoutSuccessUrl("/").permitAll()
+                )
+                .csrf(c -> c
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 );
     }
 }
